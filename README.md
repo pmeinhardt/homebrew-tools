@@ -21,4 +21,10 @@ In case you have a `Brewfile`:
 brew 'pmeinhardt/tools/<formula>', args: ['HEAD']
 ```
 
+To update, run:
+
+```shell
+brew update --fetch-HEAD <formula>
+```
+
 More on [how to create and maintain a tap](https://github.com/Homebrew/brew/blob/master/docs/How-to-Create-and-Maintain-a-Tap.md)…
