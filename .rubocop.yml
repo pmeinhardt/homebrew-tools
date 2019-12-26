@@ -1,0 +1,10 @@
+---
+Style/Documentation:
+  Exclude:
+    - 'Formula/*'
+  inherit_mode:
+    merge:
+      - Exclude
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
