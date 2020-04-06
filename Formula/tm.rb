@@ -9,11 +9,11 @@ class Tm < Formula
 
   depends_on "tmux"
 
+  test do
+    system "#{bin}/tm", "--help"
+  end
+
   def install
     bin.install "Bin/tm"
-
-    test do
-      system "#{bin}/tm", "--help"
-    end
   end
 end
