@@ -2,6 +2,8 @@
 
 Here you can find casks and formulae for a few small tools.
 
+![CircleCI](https://img.shields.io/circleci/build/github/pmeinhardt/homebrew-tools)
+
 To use these:
 
 ```shell
