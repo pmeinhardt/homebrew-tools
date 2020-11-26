@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#
+
 # Start a new tmux session in a specific directory
 #
 # Sets the tmux working directory and configures a session name
@@ -7,18 +7,16 @@
 #
 # If a session with the derived name already exists,
 # attaches to it instead of starting a new one.
-#
-# Usage:
-#
-#   tm [directory]
-#
-# Examples:
-#
-#   tm ~/.dotfiles
-#   tm projects/x
 
 function usage {
-  echo "Usage: tm [directory]" 1>&2
+  echo "Usage:"
+  echo ""
+  echo "  tm [directory]"
+  echo ""
+  echo "Examples:"
+  echo ""
+  echo "  tm ~/.dotfiles"
+  echo "  tm projects/x"
 }
 
 if test "$1" = "--help"; then

@@ -1,22 +1,11 @@
 #!/usr/bin/env bash
-#
+
 # Find out what you did today
 #
 # Lists all your commits from repos found in the given paths.
 # Use it to prepare your daily stand-up or to write job logs.
 #
 # Uses `git`, depends on `fd` - install via `brew install fd`.
-#
-# Usage:
-#
-#   hmm [--max-depth depth] [--since duration] [path...]
-#
-# Examples:
-#
-#   hmm --since '1 week ago' ~/code/project-x
-#   hmm | fzf --multi
-#   hmm | vim -
-#   hmm | ruby -e 'print STDIN.readlines.map(&:strip).join("; ")' | pbcopy
 
 set -o errexit
 set -o pipefail
@@ -33,7 +22,16 @@ since='1 day ago'
 # Utility functions
 
 function usage {
-  echo "Usage: hmm [--max-depth depth] [--since duration] [path...]" 1>&2
+  echo "Usage:"
+  echo ""
+  echo "  hmm [--max-depth depth] [--since duration] [path...]"
+  echo ""
+  echo "Examples:"
+  echo ""
+  echo "  hmm --since '1 week ago' ~/code/project-x"
+  echo "  hmm | fzf --multi"
+  echo "  hmm | vim -"
+  echo "  hmm | ruby -e 'print STDIN.readlines.map(&:strip).join(\"; \")' | pbcopy"
   exit 0
 }
 
