@@ -3,7 +3,7 @@
 class Hmm < Formula
   desc "Find out what you did today"
   homepage "https://github.com/pmeinhardt/homebrew-tools"
-  head "https://github.com/pmeinhardt/homebrew-tools.git", :branch => "main"
+  head "https://github.com/pmeinhardt/homebrew-tools.git", branch: "main"
 
   bottle :disabled
 
