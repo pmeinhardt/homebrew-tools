@@ -8,13 +8,13 @@ To use these:
 
 ```shell
 brew tap pmeinhardt/tools
-brew install <formula>
+brew install --HEAD <formula>
 ```
 
 Or, short:
 
 ```shell
-brew install pmeinhardt/tools/<formula>
+brew install --HEAD pmeinhardt/tools/<formula>
 ```
 
 In case you have a `Brewfile`:
