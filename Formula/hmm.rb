@@ -2,8 +2,8 @@
 
 class Hmm < Formula
   desc "Find out what you did today"
-  homepage "https://github.com/pmeinhardt/homebrew-tools"
-  head "https://github.com/pmeinhardt/homebrew-tools.git", branch: "main"
+  homepage "https://github.com/pmeinhardt/hmm"
+  head "https://github.com/pmeinhardt/hmm.git", branch: "main"
 
   bottle :disabled
 
@@ -15,6 +15,6 @@ class Hmm < Formula
   end
 
   def install
-    bin.install "Bin/hmm"
+    bin.install "bin/hmm"
   end
 end
