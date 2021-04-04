@@ -10,6 +10,11 @@ class Hmm < Formula
   depends_on "fd"
   depends_on "git"
 
+  livecheck do
+    url "https://github.com/pmeinhardt/hmm"
+    strategy :git
+  end
+
   test do
     system "#{bin}/hmm", "--help"
   end
