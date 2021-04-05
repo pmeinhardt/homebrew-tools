@@ -10,11 +10,11 @@ class Hmm < Formula
   depends_on "fd"
   depends_on "git"
 
-  test do
-    system "#{bin}/hmm", "--help"
-  end
-
   def install
     bin.install "bin/hmm"
+  end
+
+  test do
+    system "#{bin}/hmm", "--help"
   end
 end
