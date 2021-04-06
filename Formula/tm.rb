@@ -5,7 +5,7 @@ class Tm < Formula
   homepage "https://github.com/pmeinhardt/homebrew-tools"
   head "https://github.com/pmeinhardt/homebrew-tools.git", branch: "main"
 
-  bottle :disabled
+  bottle :unneeded
 
   depends_on "tmux"
 

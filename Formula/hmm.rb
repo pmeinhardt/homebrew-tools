@@ -5,7 +5,7 @@ class Hmm < Formula
   homepage "https://github.com/pmeinhardt/hmm"
   head "https://github.com/pmeinhardt/hmm.git", branch: "main"
 
-  bottle :disabled
+  bottle :unneeded
 
   depends_on "fd"
   depends_on "git"
