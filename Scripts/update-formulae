@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+HEAD=$(git rev-parse HEAD)
+
+for cmd in Bin/*; do
+  formula="${cmd##Bin/}"
+  version="0.2.0"
+
+  brew tap pmeinhardt/tools
+
+  brew bump-formula-pr \
+    --no-audit \
+    --no-browse \
+    --no-fork \
+    --url "https://github.com/pmeinhardt/homebrew-tools/archive/$HEAD.tar.gz" \
+    --version "$version" \
+    "pmeinhardt/tools/$formula"
+done

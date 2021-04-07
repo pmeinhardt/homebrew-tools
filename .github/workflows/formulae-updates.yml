@@ -1,0 +1,22 @@
+name: Create update PRs
+
+on: workflow_dispatch
+
+# on:
+#   push:
+#     branches:
+#       - main
+#     paths:
+#       - Bin/*
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+      - name: Create formulae update PRs
+        run: ./Scripts/update-formulae
+        env:
+          HOMEBREW_GITHUB_API_TOKEN: ${{secrets.GITHUB_TOKEN}}
