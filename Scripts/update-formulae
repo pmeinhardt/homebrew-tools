@@ -4,19 +4,74 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-HEAD=$(git rev-parse HEAD)
+cd "$(dirname "$0")/.."
 
-for cmd in Bin/*; do
-  formula="${cmd##Bin/}"
-  version="0.2.0"
+function replace {
+  local path=$1
+  local url=$2
+  local sha256=$3
+  local version=$4
 
-  brew tap pmeinhardt/tools
+  sed \
+    -r \
+    -i "" \
+    -e "s|url \"[^\"]*\"|url \"$url\"|" \
+    -e "s|sha256 \"[^\"]*\"|sha256 \"$sha256\"|" \
+    -e "s|version \"[^\"]*\"|version \"$version\"|" \
+    "$path"
+}
 
-  brew bump-formula-pr \
-    --no-audit \
-    --no-browse \
-    --no-fork \
-    --url "https://github.com/pmeinhardt/homebrew-tools/archive/$HEAD.tar.gz" \
-    --version "$version" \
-    "pmeinhardt/tools/$formula"
+for formula in Formula/*; do
+  name="${formula##Formula/}"
+  name="${name%%.rb}"
+
+  bin="Bin/$name"
+
+  repo=
+  ref=
+  url=
+  sha256=
+  version=
+
+  if [ -x "$bin" ]; then
+    repo="https://github.com/pmeinhardt/homebrew-tools"
+
+    # Determine the last commit that changed the command.
+    ref=$(git log --max-count=1 --format="format:%H" "$bin")
+
+    # Continue with next command if formula "url" points to latest revision.
+    if [[ "$(grep "url" "$formula")" = *"$ref"* ]]; then
+      continue
+    fi
+
+    # Extract current version number and increment it.
+    release=$(grep --max-count=1 "version" "$formula" | sed -r 's/^ +version "([^"]+)"$/\1/')
+    version=$(npx semver --increment minor "$release")
+
+    # Build the archive URL.
+    url="$repo/archive/$ref.tar.gz"
+  else
+    repo=$(grep --max-count=1 "homepage" "$formula" | sed -r 's/^ +homepage "([^"]+)"$/\1/')
+
+    # Fetch latest tag from API.
+    endpoint=$(echo "$repo" | sed -r -e 's|github\.com/|api.github.com/repos/|' -e 's|/?$|/tags|')
+    version=$(curl --silent --location "$endpoint" | npx fx ".[0].name")
+
+    # Continue with next command if formula "url" points to latest tag.
+    if [[ $(grep "url" "$formula") = *"$version"* ]]; then
+      continue
+    fi
+
+    # Build the archive URL.
+    url="$repo/archive/refs/tags/$version.tar.gz"
+  fi
+
+  # Get the archive checksum.
+  sha256=$(curl --silent --location "$url" | shasum -a 256 | cut -d ' ' -f 1)
+
+  # Log new formula data.
+  echo "$name $version"
+
+  # Update formula.
+  replace "$formula" "$url" "$sha256" "$version"
 done
