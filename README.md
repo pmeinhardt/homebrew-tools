@@ -8,25 +8,19 @@ To use these:
 
 ```shell
 brew tap pmeinhardt/tools
-brew install --HEAD <formula>
+brew install <formula>
 ```
 
 Or, short:
 
 ```shell
-brew install --HEAD pmeinhardt/tools/<formula>
+brew install pmeinhardt/tools/<formula>
 ```
 
 In case you have a `Brewfile`:
 
 ```ruby
-brew 'pmeinhardt/tools/<formula>', args: ['HEAD']
-```
-
-To update, run:
-
-```shell
-brew upgrade --fetch-HEAD <formula>
+brew 'pmeinhardt/tools/<formula>'
 ```
 
 More on [how to create and maintain a tap](https://github.com/Homebrew/brew/blob/master/docs/How-to-Create-and-Maintain-a-Tap.md)…
