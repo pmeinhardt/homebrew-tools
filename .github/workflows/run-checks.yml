@@ -1,0 +1,54 @@
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - name: Run prettier
+        run: npx prettier --check '**/*.md'
+  rubocop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 3
+      - name: Install dependencies
+        run: gem install rubocop
+      - name: Run rubocop
+        run: rubocop
+  shellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run shellcheck
+        run: |
+          docker run \
+            --rm \
+            --volume "$PWD:/mnt" \
+            koalaman/shellcheck:stable \
+            Bin/* \
+            Scripts/*
+  yamllint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install yamllint
+      - name: Run yamllint
+        run: yamllint .
