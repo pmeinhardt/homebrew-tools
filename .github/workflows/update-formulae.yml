@@ -21,7 +21,13 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
+      # Check out the full repository history in order to determine the correct
+      # latest commit hashes for files versioned in this repository. By default
+      # the checkout action will only fetch the latest commit:
+      # https://github.com/actions/checkout/tree/v2#Fetch-all-history-for-all-tags-and-branches
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v2
         with:
