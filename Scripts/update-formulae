@@ -55,7 +55,7 @@ for formula in Formula/*; do
 
     # Extract current version number and increment it.
     release=$(grep --max-count=1 "version" "$formula" | sed -E 's/^ +version "([^"]+)"$/\1/')
-    version=$(npx semver --increment minor "$release")
+    version=$(npx --quiet semver --increment minor "$release")
 
     # Build the archive URL.
     url="$repo/archive/$ref.tar.gz"
@@ -64,7 +64,7 @@ for formula in Formula/*; do
 
     # Fetch latest tag from API.
     endpoint=$(echo "$repo" | sed -E -e 's|github\.com/|api.github.com/repos/|' -e 's|/?$|/tags|')
-    version=$(curl --silent --location "$endpoint" | npx fx ".[0].name")
+    version=$(curl --silent --location "$endpoint" | npx --quiet fx ".[0].name")
 
     # Continue with next command if formula "url" points to latest tag.
     if [[ $(grep "url" "$formula") = *"$version"* ]]; then
