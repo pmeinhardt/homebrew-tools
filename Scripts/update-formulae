@@ -4,6 +4,9 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+# To debug, uncomment:
+# set -o xtrace
+
 cd "$(dirname "$0")/.."
 
 function replace {
@@ -12,12 +15,18 @@ function replace {
   local sha256=$3
   local version=$4
 
+  local flags=(-i)
+
+  if [ "$(uname -s)" = "Darwin" ]; then
+    flags=(-i "")
+  fi
+
   sed \
-    -r \
-    -i "" \
+    -E \
     -e "s|url \"[^\"]*\"|url \"$url\"|" \
     -e "s|sha256 \"[^\"]*\"|sha256 \"$sha256\"|" \
     -e "s|version \"[^\"]*\"|version \"$version\"|" \
+    "${flags[@]}" \
     "$path"
 }
 
@@ -45,16 +54,16 @@ for formula in Formula/*; do
     fi
 
     # Extract current version number and increment it.
-    release=$(grep --max-count=1 "version" "$formula" | sed -r 's/^ +version "([^"]+)"$/\1/')
+    release=$(grep --max-count=1 "version" "$formula" | sed -E 's/^ +version "([^"]+)"$/\1/')
     version=$(npx semver --increment minor "$release")
 
     # Build the archive URL.
     url="$repo/archive/$ref.tar.gz"
   else
-    repo=$(grep --max-count=1 "homepage" "$formula" | sed -r 's/^ +homepage "([^"]+)"$/\1/')
+    repo=$(grep --max-count=1 "homepage" "$formula" | sed -E 's/^ +homepage "([^"]+)"$/\1/')
 
     # Fetch latest tag from API.
-    endpoint=$(echo "$repo" | sed -r -e 's|github\.com/|api.github.com/repos/|' -e 's|/?$|/tags|')
+    endpoint=$(echo "$repo" | sed -E -e 's|github\.com/|api.github.com/repos/|' -e 's|/?$|/tags|')
     version=$(curl --silent --location "$endpoint" | npx fx ".[0].name")
 
     # Continue with next command if formula "url" points to latest tag.
