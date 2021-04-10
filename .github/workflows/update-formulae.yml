@@ -3,9 +3,9 @@
 name: Update formulae
 
 on:
-  # Trigger every hour to check formulae referencing other repositories
+  # Trigger once per day to check formulae referencing other repositories
   schedule:
-    - cron: "0 * * * *"
+    - cron: "0 6 * * *"
 
   # Trigger on command source file changes
   push:
