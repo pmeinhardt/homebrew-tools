@@ -29,7 +29,7 @@ jobs:
 
       - name: Update formulae
         id: update-formulae
-        run: echo "::set-output name=changes::$(Scripts/update-formulae | sed -r 's/^/- /')\n"
+        run: echo "::set-output name=changes::$(Scripts/update-formulae | sed -r 's/^/- /')"
 
       - name: Create or update pull-request
         id: create-pull-request-action
@@ -54,6 +54,4 @@ jobs:
           labels: automated pull request
 
       - name: Print pull-request details
-        run: >
-          echo "${{ steps.create-pull-request-action.outputs.pull-request-operation }}
-                ${{ steps.create-pull-request-action.outputs.pull-request-url }}"
+        run: echo "${{ steps.create-pull-request-action.outputs.pull-request-operation }} ${{ steps.create-pull-request-action.outputs.pull-request-url }}"
