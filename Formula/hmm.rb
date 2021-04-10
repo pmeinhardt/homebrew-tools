@@ -4,9 +4,9 @@ class Hmm < Formula
   desc "Find out what you did today"
   homepage "https://github.com/pmeinhardt/hmm"
   head "https://github.com/pmeinhardt/hmm.git", branch: "main"
-  url "https://github.com/pmeinhardt/hmm/archive/refs/tags/1.0.0.tar.gz"
-  sha256 "e29732283729554dce09c7d5a30170df24f25a7cef503937edfcd7c05b1f3cd7"
-  version "1.0.0"
+  url "https://github.com/pmeinhardt/hmm/archive/refs/tags/1.1.0.tar.gz"
+  sha256 "f217dee0a51536102e1e731f1b52e1884171d31977d075c91b92be6001ac1552"
+  version "1.1.0"
 
   bottle :unneeded
 

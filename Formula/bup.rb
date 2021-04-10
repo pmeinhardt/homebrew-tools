@@ -4,9 +4,9 @@ class Bup < Formula
   desc "Interactively upgrade installed brew formulae and casks"
   homepage "https://github.com/pmeinhardt/homebrew-tools"
   head "https://github.com/pmeinhardt/homebrew-tools.git", branch: "main"
-  url "https://github.com/pmeinhardt/homebrew-tools/archive/1a10359f04a76302d37b8d00c026358f824fbfad.tar.gz"
-  sha256 "2a44eed624d0134f4eb98e446de576b3fb8e59ec0c458acf56439b5560102e54"
-  version "0.1.0"
+  url "https://github.com/pmeinhardt/homebrew-tools/archive/9e447e547ae8a54b7886de62b99d32e79766af67.tar.gz"
+  sha256 "284b442a9b3946299b3ee6c62a3038631b2e920d6002d37792e48c97cc87d62c"
+  version "0.2.0"
 
   bottle :unneeded
 
