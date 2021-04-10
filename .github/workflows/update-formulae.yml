@@ -29,7 +29,14 @@ jobs:
 
       - name: Update formulae
         id: update-formulae
-        run: echo "::set-output name=changes::$(Scripts/update-formulae | sed -r 's/^/- /')"
+        run: |
+          output=$(Scripts/update-formulae | sed -r 's/^/- /')
+
+          output="${output//'%'/'%25'}"
+          output="${output//$'\n'/'%0A'}"
+          output="${output//$'\r'/'%0D'}"
+
+          echo "::set-output name=changes::$output"
 
       - name: Create or update pull-request
         id: create-pull-request-action
