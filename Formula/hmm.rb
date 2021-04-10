@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Hmm < Formula
-  desc "Find out what you did today"
+  desc "Quickly find out what you've been working on"
   homepage "https://github.com/pmeinhardt/hmm"
   head "https://github.com/pmeinhardt/hmm.git", branch: "main"
   url "https://github.com/pmeinhardt/hmm/archive/refs/tags/1.1.0.tar.gz"
