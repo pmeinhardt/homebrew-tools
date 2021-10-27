@@ -8,8 +8,6 @@ class Bup < Formula
   sha256 "13e303a96aa628f43d54307747289f699cdedad18f5cc2da547f7b92b9372e5d"
   version "0.3.0"
 
-  bottle :unneeded
-
   depends_on "fzf"
 
   def install
