@@ -8,8 +8,6 @@ class Tm < Formula
   sha256 "0fe3dfe39baf6572ad13546d188ee6e086a4b1b9cf365eb5ef65fecc32912d0b"
   version "0.3.0"
 
-  bottle :unneeded
-
   depends_on "tmux"
 
   def install
