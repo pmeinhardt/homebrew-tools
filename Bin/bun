@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Interactively uninstall brew formulae and casks that are not depended on.
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+brew leaves \
+  | fzf --multi \
+  | xargs brew uninstall
