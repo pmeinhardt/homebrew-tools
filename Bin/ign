@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Interactively get `.gitignore` templates from GitHub.
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+get () {
+  gh api --header "Accept: application/vnd.github+json" --jq "$2"  "$1"
+}
+
+name=$(get "/gitignore/templates" ".[]" | fzf)
+
+if [ -z "$name" ]; then
+  exit 1
+fi
+
+get "/gitignore/templates/$name" ".source"
