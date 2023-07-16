@@ -34,4 +34,12 @@ fi
 basename=$(basename "${directory}")
 name=$(echo "${basename#.}" | tr "." "-")
 
-exec tmux new-session -A -c "${directory}" -s "${name}"
+if [ -z "$TMUX" ]; then
+  exec tmux new-session -A -c "${directory}" -s "${name}"
+else
+  if ! tmux has-session -t "${name}" &> /dev/null; then
+    tmux new-session -c "${directory}" -s "${name}" -d
+  fi
+
+  tmux switch-client -t "${name}"
+fi
