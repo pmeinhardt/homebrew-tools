@@ -11,7 +11,7 @@ class Ql < Formula
   uses_from_macos "swift" => :build
 
   def install
-    system "swift", "build", "--configuration", "release"
+    system "swift", "build", "--disable-sandbox", "--configuration", "release"
     bin.install ".build/release/ql"
   end
 end
