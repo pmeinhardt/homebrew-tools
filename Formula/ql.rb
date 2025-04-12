@@ -3,7 +3,7 @@
 class Ql < Formula
   desc "Quick Look from the command-line"
   homepage "https://github.com/pmeinhardt/ql"
-  head "git@github.com:pmeinhardt/ql.git", branch: "main"
+  head "https://github.com/pmeinhardt/ql.git", branch: "main"
   license "MIT"
 
   depends_on :macos
