@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+# Interactive brew wrapper for updating, installing, and uninstalling formulae.
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+usage="Usage: brew-interactive [update|uninstall|install]"
+
+mode="${1:-update}"
+
+update_reload="brew update >/dev/null 2>&1; brew outdated --verbose"
+uninstall_reload="brew leaves"
+install_reload="comm -23 <(brew formulae | sort) <(brew list --formula | sort)"
+
+case "$mode" in
+  update)
+    reload="$update_reload"
+    prompt="update> "
+    ;;
+  uninstall)
+    reload="$uninstall_reload"
+    prompt="uninstall> "
+    ;;
+  install)
+    reload="$install_reload"
+    prompt="install> "
+    ;;
+  *)
+    echo "$usage" >&2
+    exit 1
+    ;;
+esac
+
+label="ctrl-/: next mode | ctrl-a: all | ctrl-z: none | ctrl-t: toggle | ctrl-h: homepage | ctrl-space: preview"
+
+true | fzf \
+  --multi \
+  --prompt="$prompt" \
+  --border=rounded \
+  --border-label="$label" \
+  --border-label-pos=bottom \
+  --delimiter=" " \
+  --nth=1 \
+  --layout=reverse \
+  --preview='brew info {1}' \
+  --preview-window=bottom:hidden \
+  --bind="start:reload:$reload" \
+  --bind='ctrl-space:toggle-preview' \
+  --bind='ctrl-a:select-all,ctrl-z:deselect-all,ctrl-t:toggle-all' \
+  --bind='ctrl-h:execute-silent(brew home {1})' \
+  --bind="ctrl-/:transform:
+    if [[ \$FZF_PROMPT =~ ^update ]]; then
+      echo \"reload($uninstall_reload)+change-prompt(uninstall> )+first\"
+    elif [[ \$FZF_PROMPT =~ ^uninstall ]]; then
+      echo \"reload($install_reload)+change-prompt(install> )+first\"
+    elif [[ \$FZF_PROMPT =~ ^install ]]; then
+      echo \"reload(brew outdated --verbose)+change-prompt(update> )+first\"
+    fi" \
+  --bind="enter:transform:
+    if [[ \$FZF_PROMPT =~ ^update ]]; then
+      echo \"execute(brew upgrade {+1})+reload(brew outdated --verbose)+first\"
+    elif [[ \$FZF_PROMPT =~ ^uninstall ]]; then
+      echo \"execute(brew uninstall {+1})+reload($uninstall_reload)+first\"
+    elif [[ \$FZF_PROMPT =~ ^install ]]; then
+      echo \"execute(brew install {+1})+reload($install_reload)+first\"
+    fi"
