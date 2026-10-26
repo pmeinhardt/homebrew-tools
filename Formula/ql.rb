@@ -11,7 +11,12 @@ class Ql < Formula
   uses_from_macos "swift" => :build
 
   def install
-    system "swift", "build", "--disable-sandbox", "--configuration", "release"
-    bin.install ".build/release/ql"
+    args = ["--disable-sandbox", "--configuration", "release"]
+    system "swift", "build", *args
+    bin.install "#{Utils.safe_popen_read('swift', 'build', *args, '--show-bin-path').chomp}/ql"
+  end
+
+  test do
+    assert_match(/^Usage: ql\b/, shell_output("#{bin}/ql", 1))
   end
 end
