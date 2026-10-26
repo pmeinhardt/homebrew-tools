@@ -25,7 +25,7 @@ jobs:
       # latest commit hashes for files versioned in this repository. By default
       # the checkout action will only fetch the latest commit:
       # https://github.com/actions/checkout/tree/v2#Fetch-all-history-for-all-tags-and-branches
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
